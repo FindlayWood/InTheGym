@@ -17,7 +17,8 @@ class WeightViewController: UIViewController {
     
     @IBOutlet var weightField: UITextField!
     
-    @IBAction func addPressed(_ sender:Any){
+    @IBAction func addPressed(_ sender:UIButton){
+        sender.pulsate()
         if let weighAmount = weightField.text{
             let dictData = ["exercise": self.exercise,
                             "sets": self.sets,

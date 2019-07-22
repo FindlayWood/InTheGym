@@ -12,6 +12,7 @@ class TableViewCell: UITableViewCell {
     
     @IBOutlet var main: UILabel!
     @IBOutlet var second: UILabel!
+    @IBOutlet var score:UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

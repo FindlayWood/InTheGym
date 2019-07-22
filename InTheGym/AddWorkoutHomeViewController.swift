@@ -60,6 +60,7 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
                 AddWorkoutHomeViewController.workouts.append(snap)
             }
         }, withCancel: nil)
+        self.tableview.layer.cornerRadius = 10
 
         // Do any additional setup after loading the view.
     }

@@ -21,6 +21,7 @@ class PlayerViewController: UIViewController {
     
     
     @IBAction func addWorkoutPressed(_ sender:UIButton){
+        sender.pulsate()
         let StoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "AddWorkoutHomeViewController") as! AddWorkoutHomeViewController
         SVC.userName = self.userNameString
@@ -28,6 +29,7 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func viewPBsPressed(_ sender:UIButton){
+        sender.pulsate()
         let StoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "PBsViewController") as! PBsViewController
         SVC.username = self.userNameString
@@ -35,6 +37,7 @@ class PlayerViewController: UIViewController {
     }
     
     @IBAction func viewWorkoutsPressed(_ sender:UIButton){
+        sender.pulsate()
         let StoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "ViewWorkoutViewController") as! ViewWorkoutViewController
         SVC.username = self.userNameString

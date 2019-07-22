@@ -10,6 +10,8 @@ target 'InTheGym' do
 	pod 'Firebase/Auth'
 	pod 'Firebase/Database'
 	pod 'Firebase/Firestore'
+	pod 'IQKeyboardManagerSwift'
+	pod 'SkyFloatingLabelTextField'
 
   target 'InTheGymTests' do
     inherit! :search_paths

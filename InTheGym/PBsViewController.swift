@@ -26,10 +26,13 @@ class PBsViewController: UIViewController {
     
     var username:String = ""
     var DBRef : DatabaseReference!
+    var ActRef : DatabaseReference!
     
     var pbArray : [[String:Any]] = []
+    var activities : [[String:AnyObject]] = []
     
     @IBAction func editPressed(_ sender:UIButton){
+        sender.pulsate()
         bench1.isUserInteractionEnabled = true
         bench3.isUserInteractionEnabled = true
         squat1.isUserInteractionEnabled = true
@@ -44,6 +47,8 @@ class PBsViewController: UIViewController {
     }
     
     @IBAction func savePressed(_ sender:UIButton){
+        sender.pulsate()
+        uploadActivity()
         let pbData = ["Bench1": bench1.text!,
                       "Bench3": bench3.text!,
                       "Squat1": squat1.text!,
@@ -74,6 +79,24 @@ class PBsViewController: UIViewController {
         fitness.isUserInteractionEnabled = false
         
     }
+    
+    func loadActivities(){
+        let userID = Auth.auth().currentUser?.uid
+        ActRef.child("users").child(userID!).child("activities").observe(.childAdded, with: { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                self.activities.append(snap)
+            }
+        }, withCancel: nil)
+    }
+    
+    func uploadActivity(){
+        let userID = Auth.auth().currentUser?.uid
+        let actData = ["time":ServerValue.timestamp(),
+                       "type":"Update PBs",
+        "message":"You updated your PB scores."] as [String:AnyObject]
+        self.activities.insert(actData, at: 0)
+        ActRef.child("users").child(userID!).child("activities").setValue(self.activities)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +104,7 @@ class PBsViewController: UIViewController {
         saveButton.isHidden = true
         
         DBRef = Database.database().reference().child("PBs")
+        ActRef = Database.database().reference()
         
         DBRef.child(username).observeSingleEvent(of: .value) { (snapshot) in
             if let snap = snapshot.value as? [String : AnyObject]{
@@ -95,6 +119,7 @@ class PBsViewController: UIViewController {
                 self.fitness.text = snap["Fitness"] as? String
             }
         }
+        loadActivities()
     }
     
     override func viewWillAppear(_ animated: Bool) {

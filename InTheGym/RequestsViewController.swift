@@ -16,6 +16,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
     var requestKeys = [String]()
     var currentRequested = [String]()
     var accepted = [String]()
+    var activities : [[String:AnyObject]] = []
     
     var DBRef:DatabaseReference!
     
@@ -30,9 +31,6 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
         
         DBRef = Database.database().reference().child("users")
         
-        
-
-        // Do any additional setup after loading the view.
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,6 +48,48 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func acceptPressed(_ sender:UIButton){
+        sender.pulsate()
+        let adminID = requestKeys[sender.tag]
+        let userID = Auth.auth().currentUser?.uid
+        
+        let alert = UIAlertController(title: "Accept Request", message: "Are you sure you want to accept \(requesters[sender.tag]) as your new Coach?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (UIAlertAction) in
+            self.DBRef.child(adminID).child("players").child("requested").observeSingleEvent(of: .value) { (snapshot) in
+                let snap = snapshot.value as? [String]
+                self.currentRequested = snap!
+                let index = self.currentRequested.firstIndex(of: self.username)
+                self.currentRequested.remove(at: index!)
+                self.DBRef.child(adminID).child("players").child("requested").setValue(self.currentRequested)
+                let coachName = self.requesters[sender.tag]
+                self.DBRef.child(userID!).child("coachName").setValue(coachName)
+                let actData = ["time":ServerValue.timestamp(),
+                               "type":"New Coach",
+                               "message":"You accepted a request from \(self.requesters[sender.tag])."] as [String:AnyObject]
+                self.activities.insert(actData, at: 0)
+                self.DBRef.child(userID!).child("activities").setValue(self.activities)
+                self.requesters.remove(at: sender.tag)
+                self.requestKeys.remove(at: sender.tag)
+                self.tableview.reloadData()
+                //self.navigationController?.popViewController(animated: true)
+            }
+            self.DBRef.child(adminID).child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
+                if let snap = snapshot.value as? [String]{
+                    self.accepted = snap
+                    self.accepted.append(self.username)
+                    self.DBRef.child(adminID).child("players").child("accepted").setValue(self.accepted)
+                }
+                else{
+                    self.accepted.append(self.username)
+                    self.DBRef.child(adminID).child("players").child("accepted").setValue(self.accepted)
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "NO", style: .destructive, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func declinePressed(_ sender:UIButton){
+        sender.pulsate()
         let adminID = requestKeys[sender.tag]
         let userID = Auth.auth().currentUser?.uid
         
@@ -59,51 +99,29 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
             let index = self.currentRequested.firstIndex(of: self.username)
             self.currentRequested.remove(at: index!)
             self.DBRef.child(adminID).child("players").child("requested").setValue(self.currentRequested)
-            let coachName = self.requesters[sender.tag]
-            self.DBRef.child(userID!).child("coachName").setValue(coachName)
-            self.requesters.remove(at: sender.tag)
-            self.requestKeys.remove(at: sender.tag)
-            self.tableview.reloadData()
-            //self.navigationController?.popViewController(animated: true)
-        }
-        
-        DBRef.child(adminID).child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
-            if let snap = snapshot.value as? [String]{
-                self.accepted = snap
-                self.accepted.append(self.username)
-                self.DBRef.child(adminID).child("players").child("accepted").setValue(self.accepted)
-            }
-            else{
-                self.accepted.append(self.username)
-                self.DBRef.child(adminID).child("players").child("accepted").setValue(self.accepted)
-            }
-        }
-    }
-    
-    @objc func declinePressed(_ sender:UIButton){
-        let adminID = requestKeys[sender.tag]
-        
-        DBRef.child(adminID).child("players").child("requested").observeSingleEvent(of: .value) { (snapshot) in
-            let snap = snapshot.value as? [String]
-            self.currentRequested = snap!
-            let index = self.currentRequested.firstIndex(of: self.username)
-            self.currentRequested.remove(at: index!)
-            self.DBRef.child(adminID).child("players").child("requested").setValue(self.currentRequested)
+            let actData = ["time":ServerValue.timestamp(),
+                           "type":"Request Declined",
+                           "message":"You declined a request from \(self.requesters[sender.tag])"] as [String:AnyObject]
+            self.activities.insert(actData, at: 0)
+            self.DBRef.child(userID!).child("activities").setValue(self.activities)
             self.requesters.remove(at: sender.tag)
             self.requestKeys.remove(at: sender.tag)
             self.tableview.reloadData()
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func loadActivities(){
+        let userID = Auth.auth().currentUser?.uid
+        DBRef.child(userID!).observe(.childAdded, with: { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                self.activities.append(snap)
+            }
+        }, withCancel: nil)
     }
-    */
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadActivities()
+    }
+
 
 }

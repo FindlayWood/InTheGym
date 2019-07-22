@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
         
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
         DBref = Database.database().reference()
         
         super.viewDidLoad()
@@ -38,6 +40,10 @@ class ViewController: UIViewController {
             }
             
         }
+    }
+    
+    @IBAction func tapped(_ sender:UIButton){
+        sender.pulsate()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -24,7 +24,8 @@ class AddPlayerViewController: UIViewController {
     
     @IBOutlet weak var playerfield:UITextField!
     
-    @IBAction func addTapped(_ sender:Any){
+    @IBAction func addTapped(_ sender:UIButton){
+        sender.pulsate()
         let typedNamed = playerfield.text
         if playerUsernames.contains(typedNamed!){
             if self.requestedPlayers.contains(typedNamed!){

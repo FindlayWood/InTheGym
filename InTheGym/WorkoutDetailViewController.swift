@@ -17,20 +17,29 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var complete: Bool!
     var exercises: [[String:AnyObject]] = []
     var workouts: [[String:AnyObject]] = []
+    var activies: [[String:AnyObject]] = []
     var DBRef:DatabaseReference!
+    var ActRef:DatabaseReference!
     var PVC: ViewWorkoutViewController!
     
     @IBOutlet var completeButton:UIButton!
     @IBOutlet var tableview:UITableView!
     
     
-    @IBAction func completed(){
+    @IBAction func completed(_ sender:UIButton){
+        sender.pulsate()
         if complete == true{
             let alert = UIAlertController(title: "Uncomplete", message: "Are you sure this workout is uncomplete?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
                 self.DBRef.child("\(self.rowNumber)").updateChildValues(["completed" : false])
                 self.DBRef.child("\(self.rowNumber)").updateChildValues(["score" : ""])
                 self.completeButton.setTitle("COMPLETED", for: .normal)
+                let actData = ["time":ServerValue.timestamp(),
+                               "message":"You uncompleted the workout \(self.titleString).",
+                    "type":"Workout UnCompleted"] as [String:AnyObject]
+                self.activies.insert(actData, at: 0)
+                self.ActRef.setValue(self.activies)
+                self.navigationController?.popViewController(animated: true)
                 
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -53,6 +62,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     let scoreNum = alert.textFields?.first?.text!
                     self.DBRef.child("\(self.rowNumber)").updateChildValues(["score" : scoreNum!])
                     self.completeButton.setTitle("UNCOMPLETED", for: .normal)
+                    let actData = ["time":ServerValue.timestamp(),
+                                   "message":"You completed the workout \(self.titleString).",
+                                    "type":"Workout Completed"] as [String:AnyObject]
+                    self.activies.insert(actData, at: 0)
+                    self.ActRef.setValue(self.activies)
+                    self.navigationController?.popViewController(animated: true)
+                    
+                    
                 }
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -70,12 +87,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableview.rowHeight = 100
+        let userID = Auth.auth().currentUser?.uid
         
         if complete == true{
             completeButton.setTitle("UNCOMPLETED", for: .normal)
         }
         navigationItem.title = titleString
         DBRef = Database.database().reference().child("Workouts").child(username)
+        ActRef = Database.database().reference().child("users").child(userID!).child("activities")
+        loadActivities()
        
     }
     
@@ -122,10 +142,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let label = UILabel()
         label.text = "Exercise \(section+1)"
         label.font = .boldSystemFont(ofSize: 15)
-        label.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        label.backgroundColor = #colorLiteral(red: 0.0167494379, green: 0.198006779, blue: 0.9999766946, alpha: 1)
         label.textAlignment = .center
         label.textColor = UIColor.white
         return label
+    }
+    
+    func loadActivities(){
+        ActRef.observe(.childAdded, with: { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                self.activies.append(snap)
+            }
+        }, withCancel: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

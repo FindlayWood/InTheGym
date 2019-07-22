@@ -20,6 +20,7 @@ class ViewWorkoutViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         
         navigationItem.title = "Workouts"
+        self.tableview.rowHeight = 80
         
     }
     
@@ -37,13 +38,16 @@ class ViewWorkoutViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableview.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
+        let score = self.workouts[indexPath.row]["score"] as? String
         cell.main.text = self.workouts[indexPath.row]["title"] as? String
         if self.workouts[indexPath.row]["completed"] as! Bool == true{
             cell.second.textColor = #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1)
             cell.second.text = "COMPLETED"
+            cell.score.text = "Score: \(score!)"
         }else{
             cell.second.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
             cell.second.text = "UNCOMPLETED"
+            cell.score.text = ""
         }
         
         return cell

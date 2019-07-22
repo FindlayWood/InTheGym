@@ -21,7 +21,8 @@ class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var welcomeLabel:UILabel!
     
-    @IBAction func logOut(_ sender: Any){
+    @IBAction func logOut(_ sender: UIButton){
+        sender.pulsate()
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
             do{
@@ -41,6 +42,8 @@ class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
         let userID = Auth.auth().currentUser?.uid
         
         DBref = Database.database().reference().child("users").child(userID!)
@@ -53,7 +56,7 @@ class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableVie
             self.welcomeLabel.text = "Welcome " + username
         }
         
-        
+        self.tableview.rowHeight = 65
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,8 +93,13 @@ class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        cell.textLabel?.text = players[indexPath.row]
+        let cell = self.tableview.dequeueReusableCell(withIdentifier: "cell") as! PlayerTableViewCell
+        for user in users{
+            if players[indexPath.row].contains(user.username!){
+                cell.name.text = "\(user.fistName ?? "") \(user.lastName ?? "")"
+                cell.username.text = "\(user.username!)"
+            }
+        }
         return cell
     }
     
@@ -103,8 +111,8 @@ class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableVie
             if players[indexPath.row].contains(user.username!){
                 SVC.userNameString = user.username!
                 SVC.userEmailString = user.email!
-                SVC.firstNameString = user.fistName!
-                SVC.lastNameString = user.lastName!
+                SVC.firstNameString = user.fistName ?? ""
+                SVC.lastNameString = user.lastName ?? ""
             }
         }
         

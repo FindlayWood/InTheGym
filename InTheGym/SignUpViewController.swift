@@ -22,6 +22,8 @@ class SignUpViewController: UIViewController {
     
     
     
+    
+    
     var userRef: DatabaseReference!
     var admin: Bool = false
     var usernames = [String]()
@@ -39,7 +41,8 @@ class SignUpViewController: UIViewController {
     
     
     
-    @IBAction func signUp(_ sender: Any){
+    @IBAction func signUp(_ sender: UIButton){
+        sender.pulsate()
         if usernames.contains(username.text!){
             let alert = UIAlertController(title: "Error!", message: "Username already exists. Please choose another username.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler:  nil))
@@ -91,9 +94,11 @@ class SignUpViewController: UIViewController {
         
         userRef = Database.database().reference().child("users")
         checkUsernames()
-
-        // Do any additional setup after loading the view.
+        
+        
     }
+    
+    
     
     func checkUsernames(){
         self.userRef.observe(.childAdded, with: { (snapshot) in
@@ -108,6 +113,7 @@ class SignUpViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
+        
     }
 
 }

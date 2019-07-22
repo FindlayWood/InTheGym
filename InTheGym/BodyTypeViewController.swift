@@ -11,6 +11,7 @@ import UIKit
 class BodyTypeViewController: UIViewController {
     
     @IBAction func buttonTapped(_ sender:UIButton){
+        sender.pulsate()
         let StoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "ExerciseViewController") as! ExerciseViewController
         
