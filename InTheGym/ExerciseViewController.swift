@@ -7,60 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var upperBodyExercises = ["Bench Press", "Shoulder Press", "Pull Ups", "Push Ups"]
-    var lowerBodyExercises = ["Squats", "Lunges", "Leg Press", "Box Jumps", "Calf Raises"]
-    var coreExercises = ["Sit Ups", "Plank", "Side Plank", "Leg Raises"]
-    var cardioExercises = ["Treadmill", "Bike", "Row"]
-    
     var exerciseType: String = ""
+    var exerciseList = [String]()
     @IBOutlet weak var tableview:UITableView!
+    
+    var DBRef:DatabaseReference!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Exercise"
 
-        // Do any additional setup after loading the view.
+        DBRef = Database.database().reference().child("Exercises")
     }
     
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if exerciseType == "Upper Body"{
-            return upperBodyExercises.count
-        }
-        else if exerciseType == "Lower Body"{
-            return lowerBodyExercises.count
-        }
-        else if exerciseType == "Core"{
-            return coreExercises.count
-        }
-        else{
-            return cardioExercises.count
-        }
+        return exerciseList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        if exerciseType == "Upper Body"{
-            cell.textLabel?.text = upperBodyExercises[indexPath.row]
-            return cell
-        }
-        else if exerciseType == "Lower Body"{
-            cell.textLabel?.text = lowerBodyExercises[indexPath.row]
-            return cell
-        }
-        else if exerciseType == "Core"{
-            cell.textLabel?.text = coreExercises[indexPath.row]
-            return cell
-        }
-        else{
-            cell.textLabel?.text = cardioExercises[indexPath.row]
-            return cell
-        }
+        cell.textLabel?.text = exerciseList[indexPath.row]
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -68,21 +42,36 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "SetsViewController") as! SetsViewController
         
         if exerciseType == "Upper Body"{
-            SVC.exercise = upperBodyExercises[indexPath.row]
+            SVC.exercise = exerciseList[indexPath.row]
         }
         else if exerciseType == "Lower Body"{
-            SVC.exercise = lowerBodyExercises[indexPath.row]
+            SVC.exercise = exerciseList[indexPath.row]
         }
         else if exerciseType == "Core"{
-            SVC.exercise = coreExercises[indexPath.row]
+            SVC.exercise = exerciseList[indexPath.row]
         }
         else{
-            SVC.exercise = cardioExercises[indexPath.row]
+            SVC.exercise = exerciseList[indexPath.row]
             SVC.type = "cardio"
         }
         
         self.navigationController?.pushViewController(SVC, animated: true)
         
+    }
+    
+    func loadExercises(bodyType: String){
+        exerciseList.removeAll()
+        DBRef.child(bodyType).observe(.childAdded) { (snapshot) in
+            if let snap = snapshot.value as? String{
+                self.exerciseList.append(snap)
+                self.tableview.reloadData()
+            }
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadExercises(bodyType: exerciseType)
     }
     
 

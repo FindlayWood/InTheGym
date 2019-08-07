@@ -17,6 +17,7 @@ class AddPlayerViewController: UIViewController {
     var adminsPlayers = [String]()
     var requestedPlayers = [String]()
     var acceptedPlayers = [String]()
+    var activities : [[String:AnyObject]] = []
     var users = [Users]()
     var adminsUsers = [Users]()
     
@@ -49,6 +50,11 @@ class AddPlayerViewController: UIViewController {
                     }
                 }
                 self.DBref.child("users").child(self.userID).child("players").child("requested").setValue(requestedPlayers)
+                let actData = ["time":ServerValue.timestamp(),
+                               "type":"Request Sent",
+                               "message":"You sent a request to \(typedNamed!)."] as [String:AnyObject]
+                self.activities.insert(actData, at: 0)
+                self.DBref.child("users").child(self.userID).child("activities").setValue(self.activities)
                 let alert = UIAlertController(title: "Added!", message: "Request has been sent to player. They will have to accept before you can assign workouts to them.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler:  nil))
                 self.present(alert, animated: true, completion: nil)
@@ -100,20 +106,20 @@ class AddPlayerViewController: UIViewController {
         
         
     }
+    func loadActivities(){
+        activities.removeAll()
+        let userID = Auth.auth().currentUser?.uid
+        DBref.child("users").child(userID!).child("activities").observe(.childAdded, with: { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                self.activities.append(snap)
+            }
+        }, withCancel: nil)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        loadActivities()
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

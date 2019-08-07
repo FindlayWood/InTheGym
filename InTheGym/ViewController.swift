@@ -32,10 +32,10 @@ class ViewController: UIViewController {
             self.DBref.child("users").child(userID!).child("admin").observeSingleEvent(of: .value) { (snapshot) in
                 print("snapshot is ", snapshot.value!)
                 if snapshot.value as! Int == 1{
-                    self.performSegue(withIdentifier: "adminLoggedIn", sender: self)
+                    self.performSegue(withIdentifier: "adminLoggedIn2", sender: self)
                 }
                 else{
-                    self.performSegue(withIdentifier: "alreadyLoggedIn", sender: self)
+                    self.performSegue(withIdentifier: "alreadyLoggedIn2", sender: self)
                 }
             }
             

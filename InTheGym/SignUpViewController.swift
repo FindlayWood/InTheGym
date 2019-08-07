@@ -43,49 +43,58 @@ class SignUpViewController: UIViewController {
     
     @IBAction func signUp(_ sender: UIButton){
         sender.pulsate()
-        if usernames.contains(username.text!){
-            let alert = UIAlertController(title: "Error!", message: "Username already exists. Please choose another username.", preferredStyle: .alert)
+        if firstName.text!.isEmpty || lastName.text!.isEmpty || email.text!.isEmpty || username.text!.isEmpty{
+            let alert = UIAlertController(title: "Error!", message: "Make sure all information has been entered.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler:  nil))
             self.present(alert, animated: true, completion: nil)
-            username.text = ""
         }
         else{
-            if password.text != passwordConfirm.text{
-                let alert = UIAlertController(title: "Error!", message: "Passwords do not match", preferredStyle: .alert)
+            if usernames.contains(username.text!){
+                let alert = UIAlertController(title: "Error!", message: "Username already exists. Please choose another username.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler:  nil))
                 self.present(alert, animated: true, completion: nil)
+                username.text = ""
             }
             else{
-                Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (user, error) in
-                    if error == nil{
-                        
-                        //let key = self.userRef.childByAutoId().key
-                        let userID = Auth.auth().currentUser!.uid
-                        
-                        let userData = ["email":self.email.text!,
-                                        "username":self.username.text!,
-                                        "admin":self.admin,
-                                        "firstName":self.firstName.text!,
-                                        "lastName":self.lastName.text!] as [String : Any]
-                        
-                        self.userRef.child(userID).setValue(userData)
-                        
-                        if self.admin == true{
-                            self.performSegue(withIdentifier: "adminPage", sender: self)
+                if password.text != passwordConfirm.text{
+                    let alert = UIAlertController(title: "Error!", message: "Passwords do not match.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler:  nil))
+                    self.present(alert, animated: true, completion: nil)
+                    password.text = ""
+                    passwordConfirm.text = ""
+                }
+                else{
+                    Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (user, error) in
+                        if error == nil{
+                            
+                            //let key = self.userRef.childByAutoId().key
+                            let userID = Auth.auth().currentUser!.uid
+                            
+                            let userData = ["email":self.email.text!,
+                                            "username":self.username.text!,
+                                            "admin":self.admin,
+                                            "firstName":self.firstName.text!,
+                                            "lastName":self.lastName.text!] as [String : Any]
+                            
+                            self.userRef.child(userID).setValue(userData)
+                            
+                            if self.admin == true{
+                                self.performSegue(withIdentifier: "adminPage2", sender: self)
+                            }
+                            else{
+                                self.performSegue(withIdentifier: "signUpHome2", sender: self)
+                            }
                         }
                         else{
-                            self.performSegue(withIdentifier: "signUpHome", sender: self)
+                            let alert = UIAlertController(title: "Error!", message: "Invalid email address.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            self.email.text = ""
                         }
-                    }
-                    else{
-                        let alert = UIAlertController(title: "Error", message: "there has been an error", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             }
         }
-        
     }
 
     override func viewDidLoad() {

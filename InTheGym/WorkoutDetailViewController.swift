@@ -14,12 +14,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var username: String = ""
     var titleString: String = ""
     var rowNumber: Int = 0
+    var numberCompleted:Int!
     var complete: Bool!
     var exercises: [[String:AnyObject]] = []
     var workouts: [[String:AnyObject]] = []
     var activies: [[String:AnyObject]] = []
     var DBRef:DatabaseReference!
     var ActRef:DatabaseReference!
+    var ComRef:DatabaseReference!
     var PVC: ViewWorkoutViewController!
     
     @IBOutlet var completeButton:UIButton!
@@ -39,6 +41,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     "type":"Workout UnCompleted"] as [String:AnyObject]
                 self.activies.insert(actData, at: 0)
                 self.ActRef.setValue(self.activies)
+                self.numberCompleted -= 1
+                self.ComRef.child("numberOfCompletes").setValue(self.numberCompleted)
                 self.navigationController?.popViewController(animated: true)
                 
             }))
@@ -67,6 +71,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                                     "type":"Workout Completed"] as [String:AnyObject]
                     self.activies.insert(actData, at: 0)
                     self.ActRef.setValue(self.activies)
+                    self.numberCompleted += 1
+                    self.ComRef.child("numberOfCompletes").setValue(self.numberCompleted)
                     self.navigationController?.popViewController(animated: true)
                     
                     
@@ -95,7 +101,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         navigationItem.title = titleString
         DBRef = Database.database().reference().child("Workouts").child(username)
         ActRef = Database.database().reference().child("users").child(userID!).child("activities")
+        ComRef = Database.database().reference().child("users").child(userID!)
         loadActivities()
+        loadNumberOfCompletes()
        
     }
     
@@ -154,6 +162,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.activies.append(snap)
             }
         }, withCancel: nil)
+    }
+    
+    func loadNumberOfCompletes(){
+        ComRef.child("numberOfCompletes").observeSingleEvent(of: .value) { (snapshot) in
+            let count = snapshot.value as? Int
+            self.numberCompleted = count ?? 0
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

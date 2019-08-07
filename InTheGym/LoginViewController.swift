@@ -24,10 +24,10 @@ class LoginViewController: UIViewController {
                 
                 self.DBref.child("users").child(userID!).child("admin").observeSingleEvent(of: .value, with: { (snapshot) in
                     if snapshot.value as! Int == 1{
-                        self.performSegue(withIdentifier: "logInAdmin", sender: self)
+                        self.performSegue(withIdentifier: "logInAdmin2", sender: self)
                     }
                     else{
-                        self.performSegue(withIdentifier: "logInHome", sender: self)
+                        self.performSegue(withIdentifier: "logInHome2", sender: self)
                     }
                 })
                 
@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
                 
             }
             else{
-                let alert = UIAlertController(title: "Error", message: "there was an error", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Error", message: "Invalid information. Please enter valid login information.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }

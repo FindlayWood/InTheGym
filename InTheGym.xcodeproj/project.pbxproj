@@ -12,11 +12,17 @@
 		74163A4422E37089005A7D2E /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74163A4322E37089005A7D2E /* ButtonExtension.swift */; };
 		74163A4622E39523005A7D2E /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74163A4522E39523005A7D2E /* PlayerTableViewCell.swift */; };
 		74163A4822E4A7AF005A7D2E /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74163A4722E4A7AF005A7D2E /* ActivityTableViewCell.swift */; };
+		743B1E7D22EF440E0046006C /* AdminActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743B1E7C22EF440E0046006C /* AdminActivityViewController.swift */; };
+		743B1E7F22EF49CF0046006C /* AdminPlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743B1E7E22EF49CF0046006C /* AdminPlayersViewController.swift */; };
+		743B1E8122EF573A0046006C /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743B1E8022EF573A0046006C /* MyInfoViewController.swift */; };
+		743B1E8322F060990046006C /* PlayerActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743B1E8222F060990046006C /* PlayerActivityViewController.swift */; };
+		743B1E8522F065DB0046006C /* PlayerWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743B1E8422F065DB0046006C /* PlayerWorkoutViewController.swift */; };
+		743B1E8722F08F3F0046006C /* PlayerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743B1E8622F08F3F0046006C /* PlayerInfoViewController.swift */; };
+		74443B9822F1CD6B00DD18B3 /* ViewDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74443B9722F1CD6B00DD18B3 /* ViewDesign.swift */; };
+		74443B9A22F1E18500DD18B3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74443B9922F1E18500DD18B3 /* SettingsViewController.swift */; };
 		745D0E7822A007A3007670E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 745D0E7722A007A3007670E3 /* GoogleService-Info.plist */; };
 		745D0E7A22A17E26007670E3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D0E7922A17E26007670E3 /* LoginViewController.swift */; };
 		745D0E7C22A17ED2007670E3 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D0E7B22A17ED2007670E3 /* SignUpViewController.swift */; };
-		745D0E7E22A183DC007670E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D0E7D22A183DC007670E3 /* HomeViewController.swift */; };
-		745D0E8022A2B951007670E3 /* AdminHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D0E7F22A2B951007670E3 /* AdminHomeViewController.swift */; };
 		7479A909229F2B4C00D39E2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479A908229F2B4C00D39E2E /* AppDelegate.swift */; };
 		7479A90B229F2B4C00D39E2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479A90A229F2B4C00D39E2E /* ViewController.swift */; };
 		7479A90E229F2B4C00D39E2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7479A90C229F2B4C00D39E2E /* Main.storyboard */; };
@@ -72,11 +78,17 @@
 		74163A4322E37089005A7D2E /* ButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
 		74163A4522E39523005A7D2E /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		74163A4722E4A7AF005A7D2E /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
+		743B1E7C22EF440E0046006C /* AdminActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminActivityViewController.swift; sourceTree = "<group>"; };
+		743B1E7E22EF49CF0046006C /* AdminPlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPlayersViewController.swift; sourceTree = "<group>"; };
+		743B1E8022EF573A0046006C /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
+		743B1E8222F060990046006C /* PlayerActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerActivityViewController.swift; sourceTree = "<group>"; };
+		743B1E8422F065DB0046006C /* PlayerWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWorkoutViewController.swift; sourceTree = "<group>"; };
+		743B1E8622F08F3F0046006C /* PlayerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInfoViewController.swift; sourceTree = "<group>"; };
+		74443B9722F1CD6B00DD18B3 /* ViewDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDesign.swift; sourceTree = "<group>"; };
+		74443B9922F1E18500DD18B3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		745D0E7722A007A3007670E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		745D0E7922A17E26007670E3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		745D0E7B22A17ED2007670E3 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		745D0E7D22A183DC007670E3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		745D0E7F22A2B951007670E3 /* AdminHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminHomeViewController.swift; sourceTree = "<group>"; };
 		7479A905229F2B4C00D39E2E /* InTheGym.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InTheGym.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7479A908229F2B4C00D39E2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7479A90A229F2B4C00D39E2E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -178,13 +190,10 @@
 				7479A90F229F2B4C00D39E2E /* InTheGym.xcdatamodeld */,
 				745D0E7922A17E26007670E3 /* LoginViewController.swift */,
 				745D0E7B22A17ED2007670E3 /* SignUpViewController.swift */,
-				745D0E7D22A183DC007670E3 /* HomeViewController.swift */,
 				74163A4722E4A7AF005A7D2E /* ActivityTableViewCell.swift */,
 				7492265522DA43BB00EAD386 /* RequestsViewController.swift */,
 				7492265722DA49E500EAD386 /* RequestTableViewCell.swift */,
-				745D0E7F22A2B951007670E3 /* AdminHomeViewController.swift */,
 				74163A4522E39523005A7D2E /* PlayerTableViewCell.swift */,
-				7492263122C8D1DF00EAD386 /* AddPlayerViewController.swift */,
 				7492263522CBD66600EAD386 /* Users.swift */,
 				7492263722CE3B0E00EAD386 /* PlayerViewController.swift */,
 				7492263922CE6CD400EAD386 /* AddWorkoutHomeViewController.swift */,
@@ -201,6 +210,15 @@
 				7492265122D8D0BA00EAD386 /* DetailTableViewCell.swift */,
 				7492265322D91C1900EAD386 /* RoundButtons.swift */,
 				74163A4322E37089005A7D2E /* ButtonExtension.swift */,
+				743B1E7C22EF440E0046006C /* AdminActivityViewController.swift */,
+				743B1E7E22EF49CF0046006C /* AdminPlayersViewController.swift */,
+				7492263122C8D1DF00EAD386 /* AddPlayerViewController.swift */,
+				743B1E8022EF573A0046006C /* MyInfoViewController.swift */,
+				743B1E8222F060990046006C /* PlayerActivityViewController.swift */,
+				743B1E8422F065DB0046006C /* PlayerWorkoutViewController.swift */,
+				743B1E8622F08F3F0046006C /* PlayerInfoViewController.swift */,
+				74443B9722F1CD6B00DD18B3 /* ViewDesign.swift */,
+				74443B9922F1E18500DD18B3 /* SettingsViewController.swift */,
 			);
 			path = InTheGym;
 			sourceTree = "<group>";
@@ -471,6 +489,8 @@
 				7492263E22D226F400EAD386 /* BodyTypeViewController.swift in Sources */,
 				7492265822DA49E500EAD386 /* RequestTableViewCell.swift in Sources */,
 				7492264422D2624D00EAD386 /* Exercise.swift in Sources */,
+				743B1E7D22EF440E0046006C /* AdminActivityViewController.swift in Sources */,
+				74443B9822F1CD6B00DD18B3 /* ViewDesign.swift in Sources */,
 				745D0E7A22A17E26007670E3 /* LoginViewController.swift in Sources */,
 				7492263622CBD66600EAD386 /* Users.swift in Sources */,
 				7479A90B229F2B4C00D39E2E /* ViewController.swift in Sources */,
@@ -481,21 +501,25 @@
 				7492263A22CE6CD400EAD386 /* AddWorkoutHomeViewController.swift in Sources */,
 				74163A4422E37089005A7D2E /* ButtonExtension.swift in Sources */,
 				7492265622DA43BB00EAD386 /* RequestsViewController.swift in Sources */,
+				743B1E8522F065DB0046006C /* PlayerWorkoutViewController.swift in Sources */,
+				743B1E8322F060990046006C /* PlayerActivityViewController.swift in Sources */,
 				7492264022D230CA00EAD386 /* SetsViewController.swift in Sources */,
 				7492265222D8D0BA00EAD386 /* DetailTableViewCell.swift in Sources */,
 				74163A4622E39523005A7D2E /* PlayerTableViewCell.swift in Sources */,
 				7492264622D3A9C100EAD386 /* PBsViewController.swift in Sources */,
-				745D0E8022A2B951007670E3 /* AdminHomeViewController.swift in Sources */,
 				74163A4822E4A7AF005A7D2E /* ActivityTableViewCell.swift in Sources */,
+				743B1E8122EF573A0046006C /* MyInfoViewController.swift in Sources */,
 				7492265022D7C29700EAD386 /* WeightViewController.swift in Sources */,
 				7492263222C8D1DF00EAD386 /* AddPlayerViewController.swift in Sources */,
 				7492264A22D50E4400EAD386 /* WorkoutDetailViewController.swift in Sources */,
 				745D0E7C22A17ED2007670E3 /* SignUpViewController.swift in Sources */,
-				745D0E7E22A183DC007670E3 /* HomeViewController.swift in Sources */,
+				743B1E8722F08F3F0046006C /* PlayerInfoViewController.swift in Sources */,
+				743B1E7F22EF49CF0046006C /* AdminPlayersViewController.swift in Sources */,
 				7492264222D2350400EAD386 /* RepsViewController.swift in Sources */,
 				7492263C22D2255000EAD386 /* ExerciseViewController.swift in Sources */,
 				7492263822CE3B0E00EAD386 /* PlayerViewController.swift in Sources */,
 				7492264822D4F05D00EAD386 /* ViewWorkoutViewController.swift in Sources */,
+				74443B9A22F1E18500DD18B3 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

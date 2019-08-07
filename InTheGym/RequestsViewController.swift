@@ -39,7 +39,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.acceptButton.tag = indexPath.row
         cell.declineButton.tag = indexPath.row
         cell.acceptButton.addTarget(self, action: "acceptPressed:", for: .touchUpInside)
-        cell.declineButton.addTarget(self, action: "declinePressed", for: .touchUpInside)
+        cell.declineButton.addTarget(self, action: "declinePressed:", for: .touchUpInside)
         return cell
     }
     

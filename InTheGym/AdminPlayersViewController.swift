@@ -1,75 +1,41 @@
 //
-//  AdminHomeViewController.swift
+//  AdminPlayersViewController.swift
 //  InTheGym
 //
-//  Created by Findlay Wood on 01/06/2019.
+//  Created by Findlay Wood on 29/07/2019.
 //  Copyright © 2019 FindlayWood. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableview:UITableView!
     
     var DBref:DatabaseReference!
     var userRef:DatabaseReference!
     
     var players = [String]()
     var users = [Users]()
-    
-    @IBOutlet weak var tableview:UITableView!
-    
-    @IBOutlet weak var welcomeLabel:UILabel!
-    
-    @IBAction func logOut(_ sender: UIButton){
-        sender.pulsate()
-        let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
-            do{
-                try Auth.auth().signOut()
-            }
-            catch let signOutError as NSError{
-                print("Error signing out: %@", signOutError)
-            }
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initial = storyboard.instantiateInitialViewController()
-            UIApplication.shared.keyWindow?.rootViewController = initial
-        }))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         
         let userID = Auth.auth().currentUser?.uid
         
         DBref = Database.database().reference().child("users").child(userID!)
         userRef = Database.database().reference()
-        loadPlayers()
-        loadUsers()
         
-        DBref.child("username").observeSingleEvent(of: .value) { (snapshot) in
-            let username = snapshot.value as! String
-            self.welcomeLabel.text = "Welcome " + username
-        }
-        
-        self.tableview.rowHeight = 65
+        self.tableview.rowHeight = 75
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        loadPlayers()
-        loadUsers()
-    }
     
     func loadPlayers(){
         DBref.child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
             if let snap = snapshot.value as? [String]{
                 self.players = snap
                 self.tableview.reloadData()
-    
             }
         }
     }
@@ -128,11 +94,10 @@ class AdminHomeViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    
-    
-
-    
     override func viewWillAppear(_ animated: Bool) {
+        loadUsers()
+        loadPlayers()
+        tableview.reloadData()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 

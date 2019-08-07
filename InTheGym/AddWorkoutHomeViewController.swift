@@ -16,9 +16,16 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
     
     var userName:String!
     var DBRef:DatabaseReference!
+    var ActRef:DatabaseReference!
     
-    static var exercises : [[String:String]] = []
+    var workoutsCount:Int!
+    
+    var activities:[[String:AnyObject]] = []
+    let userID = Auth.auth().currentUser!.uid
+    
+    static var exercises :[[String:String]] = []
     static var workouts :[[String:Any]] = []
+    
     
     
     @IBAction func savePressed(_ sender:UIButton){
@@ -39,12 +46,19 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
             
             AddWorkoutHomeViewController.workouts.append(exerciseData)
             DBRef.setValue(AddWorkoutHomeViewController.workouts)
+            let actData = ["time":ServerValue.timestamp(),
+                           "type":"Set Workout",
+                           "message":"You created a workout for \(userName!)."] as [String:AnyObject]
+            self.activities.insert(actData, at: 0)
+            self.ActRef.child("users").child(self.userID).child("activities").setValue(self.activities)
             titleField.text = ""
             AddWorkoutHomeViewController.exercises.removeAll()
             tableview.reloadData()
             let alert = UIAlertController(title: "Uploaded!", message: "This workout has been uploaded and the player can now view it.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler:  nil))
             self.present(alert, animated: true, completion: nil)
+            workoutsCount += 1
+            self.ActRef.child("users").child(userID).child("NumberOfWorkouts").setValue(workoutsCount)
         }
     }
 
@@ -54,6 +68,7 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
         hideKeyboardWhenTappedAround()
         
         DBRef = Database.database().reference().child("Workouts").child(userName)
+        ActRef = Database.database().reference()
         
         DBRef.observe(.childAdded, with: { (snapshot) in
             if let snap = snapshot.value as? [String:AnyObject]{
@@ -81,7 +96,27 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
         }
     }
     
+    func loadActivities(){
+        activities.removeAll()
+        let userID = Auth.auth().currentUser?.uid
+        ActRef.child("users").child(userID!).child("activities").observe(.childAdded, with: { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                self.activities.append(snap)
+            }
+        }, withCancel: nil)
+    }
+    
+    func loadNumberOfWorkouts(){
+        ActRef.child("users").child(userID).child("NumberOfWorkouts").observeSingleEvent(of: .value) { (snapshot) in
+            let count = snapshot.value as? Int ?? 0
+            self.workoutsCount = count
+        }
+    }
+
+    
     override func viewWillAppear(_ animated: Bool) {
+        loadActivities()
+        loadNumberOfWorkouts()
         tableview.reloadData()
     }
 
