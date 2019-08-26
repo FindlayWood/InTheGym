@@ -17,6 +17,7 @@ class AddPlayerViewController: UIViewController {
     var adminsPlayers = [String]()
     var requestedPlayers = [String]()
     var acceptedPlayers = [String]()
+    var acceptedUsername = [String]()
     var activities : [[String:AnyObject]] = []
     var users = [Users]()
     var adminsUsers = [Users]()
@@ -35,7 +36,7 @@ class AddPlayerViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 playerfield.text = ""
             }
-            else if self.acceptedPlayers.contains(typedNamed!){
+            else if self.acceptedUsername.contains(typedNamed!){
                 let alert = UIAlertController(title: "OOPS", message: "This player has already been added.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
@@ -87,6 +88,14 @@ class AddPlayerViewController: UIViewController {
         self.DBref.child("users").child(self.userID).child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
             if let snap = snapshot.value as? [String]{
                 self.acceptedPlayers = snap
+                for player in self.acceptedPlayers{
+                    self.DBref.child("users").child(player).observe(.value, with: { (snapshot) in
+                        if let snap = snapshot.value as? [String:AnyObject]{
+                            let uid = snap["username"] as? String
+                            self.acceptedUsername.append(uid!)
+                        }
+                    })
+                }
             }
         }
         

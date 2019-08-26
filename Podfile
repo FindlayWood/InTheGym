@@ -12,6 +12,7 @@ target 'InTheGym' do
 	pod 'Firebase/Firestore'
 	pod 'IQKeyboardManagerSwift'
 	pod 'SkyFloatingLabelTextField'
+	pod 'Charts'
 
   target 'InTheGymTests' do
     inherit! :search_paths

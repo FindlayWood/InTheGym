@@ -72,6 +72,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         loadExercises(bodyType: exerciseType)
+        navigationController?.navigationBar.tintColor = .white
     }
     
 

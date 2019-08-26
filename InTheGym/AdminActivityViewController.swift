@@ -13,11 +13,12 @@ class AdminActivityViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var tableview:UITableView!
     
-    var username:String = ""
+    static var username:String = ""
     var activities : [[String:AnyObject]] = []
     
     var DBRef:DatabaseReference!
     var ActRef:DatabaseReference!
+    var UserRef:DatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,10 @@ class AdminActivityViewController: UIViewController, UITableViewDelegate, UITabl
         let userID = Auth.auth().currentUser?.uid
         ActRef = Database.database().reference().child("users").child(userID!).child("activities")
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        UserRef = Database.database().reference().child("users").child(userID!)
+        UserRef.child("username").observeSingleEvent(of: .value) { (snapshot) in
+            AdminActivityViewController.username = snapshot.value as! String
+        }
 
     }
     

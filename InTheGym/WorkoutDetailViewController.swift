@@ -23,6 +23,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var ActRef:DatabaseReference!
     var ComRef:DatabaseReference!
     var PVC: ViewWorkoutViewController!
+    var ScoreRef: DatabaseReference!
     
     @IBOutlet var completeButton:UIButton!
     @IBOutlet var tableview:UITableView!
@@ -65,6 +66,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.DBRef.child("\(self.rowNumber)").updateChildValues(["completed" : true])
                     let scoreNum = alert.textFields?.first?.text!
                     self.DBRef.child("\(self.rowNumber)").updateChildValues(["score" : scoreNum!])
+                    self.ScoreRef.updateChildValues([self.titleString:scoreNum!])
                     self.completeButton.setTitle("UNCOMPLETED", for: .normal)
                     let actData = ["time":ServerValue.timestamp(),
                                    "message":"You completed the workout \(self.titleString).",
@@ -102,6 +104,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         DBRef = Database.database().reference().child("Workouts").child(username)
         ActRef = Database.database().reference().child("users").child(userID!).child("activities")
         ComRef = Database.database().reference().child("users").child(userID!)
+        if ViewController.admin == true{
+            ScoreRef = Database.database().reference().child("Scores").child(AdminActivityViewController.username).child(username)
+        }
+        else{
+            ScoreRef = Database.database().reference().child("Scores").child(PlayerActivityViewController.coachName).child(username)
+        }
+        //ScoreRef = Database.database().reference().child("Scores").child(userID!).child(username)
         loadActivities()
         loadNumberOfCompletes()
        

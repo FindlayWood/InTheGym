@@ -20,6 +20,8 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
     
     var DBRef:DatabaseReference!
     
+    let userID = Auth.auth().currentUser?.uid
+    
     
     @IBOutlet weak var tableview:UITableView!
 
@@ -75,11 +77,11 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
             self.DBRef.child(adminID).child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
                 if let snap = snapshot.value as? [String]{
                     self.accepted = snap
-                    self.accepted.append(self.username)
+                    self.accepted.append(self.userID!)
                     self.DBRef.child(adminID).child("players").child("accepted").setValue(self.accepted)
                 }
                 else{
-                    self.accepted.append(self.username)
+                    self.accepted.append(self.userID!)
                     self.DBRef.child(adminID).child("players").child("accepted").setValue(self.accepted)
                 }
             }

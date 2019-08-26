@@ -25,6 +25,8 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
         let userID = Auth.auth().currentUser?.uid
         
         DBref = Database.database().reference().child("users").child(userID!)
+        
+        
         userRef = Database.database().reference()
         
         self.tableview.rowHeight = 75
@@ -36,22 +38,25 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
             if let snap = snapshot.value as? [String]{
                 self.players = snap
                 self.tableview.reloadData()
+                self.loadUsers()
             }
         }
     }
     
     func loadUsers(){
-        userRef.child("users").observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String:AnyObject]{
-                let user = Users()
-                user.username = dictionary["username"] as? String
-                user.admin = dictionary["admin"] as? Bool
-                user.email = dictionary["email"] as? String
-                user.fistName = dictionary["firstName"] as? String
-                user.lastName = dictionary["lastName"] as? String
-                self.users.append(user)
+        for player in players{
+            userRef.child("users").child(player).observe(.value) { (snapshot) in
+                if let snap = snapshot.value as? [String:AnyObject]{
+                    let user = Users()
+                    user.username = snap["username"] as? String
+                    user.email = snap["email"] as? String
+                    user.fistName = snap["firstName"] as? String
+                    user.lastName = snap["lastName"] as? String
+                    self.users.append(user)
+                    
+                }
             }
-        }, withCancel: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,10 +65,14 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableview.dequeueReusableCell(withIdentifier: "cell") as! PlayerTableViewCell
-        for user in users{
-            if players[indexPath.row].contains(user.username!){
-                cell.name.text = "\(user.fistName ?? "") \(user.lastName ?? "")"
-                cell.username.text = "\(user.username!)"
+        let currentID = players[indexPath.row]
+        userRef.child("users").child(currentID).observe(.value) { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                let first = snap["firstName"] as! String
+                let last = snap["lastName"] as! String
+                cell.name.text = "\(first) \(last)"
+                let username = snap["username"] as! String
+                cell.username.text = "\(username)"
             }
         }
         return cell
@@ -73,14 +82,11 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
         let StoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
         
-        for user in users{
-            if players[indexPath.row].contains(user.username!){
-                SVC.userNameString = user.username!
-                SVC.userEmailString = user.email!
-                SVC.firstNameString = user.fistName ?? ""
-                SVC.lastNameString = user.lastName ?? ""
-            }
-        }
+        let currentUser = users[indexPath.row]
+        SVC.firstNameString = currentUser.username!
+        SVC.lastNameString = currentUser.lastName!
+        SVC.userNameString = currentUser.username!
+        SVC.userEmailString = currentUser.email!
         
         self.navigationController?.pushViewController(SVC, animated: true)
     }
@@ -95,7 +101,7 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadUsers()
+        //loadUsers()
         loadPlayers()
         tableview.reloadData()
         self.navigationController?.setNavigationBarHidden(true, animated: true)

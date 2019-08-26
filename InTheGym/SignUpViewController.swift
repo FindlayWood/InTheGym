@@ -80,9 +80,11 @@ class SignUpViewController: UIViewController {
                             
                             if self.admin == true{
                                 self.performSegue(withIdentifier: "adminPage2", sender: self)
+                                ViewController.admin = true
                             }
                             else{
                                 self.performSegue(withIdentifier: "signUpHome2", sender: self)
+                                ViewController.admin = false
                             }
                         }
                         else{

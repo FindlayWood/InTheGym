@@ -70,11 +70,7 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
         DBRef = Database.database().reference().child("Workouts").child(userName)
         ActRef = Database.database().reference()
         
-        DBRef.observe(.childAdded, with: { (snapshot) in
-            if let snap = snapshot.value as? [String:AnyObject]{
-                AddWorkoutHomeViewController.workouts.append(snap)
-            }
-        }, withCancel: nil)
+        
         self.tableview.layer.cornerRadius = 10
 
         // Do any additional setup after loading the view.
@@ -94,6 +90,15 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
             AddWorkoutHomeViewController.exercises.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
         }
+    }
+    func loadWorkouts(){
+        AddWorkoutHomeViewController.workouts.removeAll()
+        DBRef.observe(.childAdded, with: { (snapshot) in
+            if let snap = snapshot.value as? [String:AnyObject]{
+                AddWorkoutHomeViewController.workouts.append(snap)
+                
+            }
+        }, withCancel: nil)
     }
     
     func loadActivities(){
@@ -115,9 +120,11 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
 
     
     override func viewWillAppear(_ animated: Bool) {
+        loadWorkouts()
         loadActivities()
         loadNumberOfWorkouts()
         tableview.reloadData()
+        navigationController?.navigationBar.tintColor = .white
     }
 
 }

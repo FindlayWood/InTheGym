@@ -14,6 +14,7 @@ class PlayerActivityViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var tableview:UITableView!
     
     static var username:String!
+    static var coachName:String!
     
     var activities:[[String:AnyObject]] = []
     
@@ -31,6 +32,11 @@ class PlayerActivityViewController: UIViewController, UITableViewDelegate, UITab
         UserRef = Database.database().reference().child("users").child(userID!)
         UserRef.child("username").observeSingleEvent(of: .value) { (snapshot) in
             PlayerActivityViewController.username = snapshot.value as? String
+        }
+        UserRef.child("coachName").observeSingleEvent(of: .value) { (snapshot) in
+            if let snap = snapshot.value as? String{
+                PlayerActivityViewController.coachName = snap
+            }
         }
     }
     

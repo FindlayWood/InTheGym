@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var email:UITextField!
     @IBOutlet weak var password:UITextField!
     
+    @IBOutlet weak var forgotButton:UIButton!
+    
     var DBref:DatabaseReference!
     
     @IBAction func logIn(_ sender: UIButton){
@@ -25,9 +27,11 @@ class LoginViewController: UIViewController {
                 self.DBref.child("users").child(userID!).child("admin").observeSingleEvent(of: .value, with: { (snapshot) in
                     if snapshot.value as! Int == 1{
                         self.performSegue(withIdentifier: "logInAdmin2", sender: self)
+                        ViewController.admin = true
                     }
                     else{
                         self.performSegue(withIdentifier: "logInHome2", sender: self)
+                        ViewController.admin = false
                     }
                 })
                 
@@ -47,6 +51,16 @@ class LoginViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         
         DBref = Database.database().reference()
+        
+        let attrs : [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.font : UIFont(name: "Menlo", size: 15)!,
+            NSAttributedString.Key.foregroundColor : UIColor.white,
+            NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue
+        ]
+        
+        let attributeString = NSMutableAttributedString(string: "FORGOT PASSWORD?",
+                                                        attributes: attrs)
+        forgotButton.setAttributedTitle(attributeString, for: .normal)
 
         // Do any additional setup after loading the view.
     }

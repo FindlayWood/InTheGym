@@ -8,12 +8,28 @@
 
 import UIKit
 import Firebase
+import Network
 
 class ViewController: UIViewController {
     
     var DBref: DatabaseReference!
+    
+    
+    static var admin:Bool!
+    
+    let monitor = NWPathMonitor()
 
     override func viewDidLoad() {
+        
+        monitor.pathUpdateHandler = { path in
+            if path.status == .unsatisfied{
+                self.showAlert()
+            }
+        }
+        
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
+        
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -30,12 +46,13 @@ class ViewController: UIViewController {
             print("user id is ", userID!)
             
             self.DBref.child("users").child(userID!).child("admin").observeSingleEvent(of: .value) { (snapshot) in
-                print("snapshot is ", snapshot.value!)
                 if snapshot.value as! Int == 1{
                     self.performSegue(withIdentifier: "adminLoggedIn2", sender: self)
+                    ViewController.admin = true
                 }
                 else{
                     self.performSegue(withIdentifier: "alreadyLoggedIn2", sender: self)
+                    ViewController.admin = false
                 }
             }
             
@@ -48,6 +65,11 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func showAlert(){
+        let alert = UIAlertController(title: "Connection", message: "You are not connected to the internet. This application will not work without an internet connection.", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
     }
 
 
