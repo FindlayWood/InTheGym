@@ -28,6 +28,9 @@ class PBsViewController: UIViewController {
     var DBRef : DatabaseReference!
     var ActRef : DatabaseReference!
     
+    //reference to leaderboard
+    var LeaderRef:DatabaseReference!
+    
     var pbArray : [[String:Any]] = []
     var activities : [[String:AnyObject]] = []
     
@@ -103,8 +106,11 @@ class PBsViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         saveButton.isHidden = true
         
+        //creating database references
         DBRef = Database.database().reference().child("PBs")
         ActRef = Database.database().reference()
+        
+        
         
         DBRef.child(username).observeSingleEvent(of: .value) { (snapshot) in
             if let snap = snapshot.value as? [String : AnyObject]{
@@ -124,5 +130,8 @@ class PBsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        let textAttributes = [NSAttributedString.Key.foregroundColor:#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 }

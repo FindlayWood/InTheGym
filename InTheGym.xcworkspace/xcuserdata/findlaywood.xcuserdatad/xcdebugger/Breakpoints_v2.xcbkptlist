@@ -1,22 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "9A0CDD82-BC18-4118-BC6C-0CF9418C97B1"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            uuid = "C8FC8A2F-E1E2-487B-BAB0-0679B988529C"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "InTheGym/ResetPasswordViewController.swift"
-            timestampString = "588515376.392674"
+            filePath = "InTheGym/AdminPlayersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "resetPressed(_:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5CA80A8A-FF60-49ED-B797-5BCF94B46CC7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "InTheGym/AdminPlayersViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "loadUsers()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9C6FF5C5-44EC-40C9-B23A-EA310BDD7C56"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "InTheGym/AdminPlayersViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "loadPlayers()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9C6FF5C5-44EC-40C9-B23A-EA310BDD7C56 - 7a3ef2ef689bbb48"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InTheGym.AdminPlayersViewController.loadPlayers() -&gt; ()"
+                  moduleName = "InTheGym"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/findlaywood/Documents/Xcode%20work/InTheGym/InTheGym/AdminPlayersViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "55">
+               </Location>
+               <Location
+                  uuid = "9C6FF5C5-44EC-40C9-B23A-EA310BDD7C56 - 7712363a334ad9d2"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in InTheGym.AdminPlayersViewController.loadPlayers() -&gt; ()"
+                  moduleName = "InTheGym"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/findlaywood/Documents/Xcode%20work/InTheGym/InTheGym/AdminPlayersViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "136">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

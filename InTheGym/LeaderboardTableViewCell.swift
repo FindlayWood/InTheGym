@@ -1,18 +1,18 @@
 //
-//  PlayerTableViewCell.swift
+//  LeaderboardTableViewCell.swift
 //  InTheGym
 //
-//  Created by Findlay Wood on 20/07/2019.
-//  Copyright © 2019 FindlayWood. All rights reserved.
+//  Created by Findlay Wood on 19/02/2020.
+//  Copyright © 2020 FindlayWood. All rights reserved.
 //
 
 import UIKit
 
-class PlayerTableViewCell: UITableViewCell {
+class LeaderboardTableViewCell: UITableViewCell {
     
-    // outlet variables inside the player tableview cell
-    @IBOutlet weak var name:UILabel!
-    @IBOutlet weak var username:UILabel!
+    @IBOutlet weak var numberLabel:UILabel!
+    @IBOutlet weak var usernameLabel:UILabel!
+    @IBOutlet weak var weightLabel:UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

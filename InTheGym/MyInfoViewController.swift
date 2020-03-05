@@ -42,9 +42,6 @@ class MyInfoViewController: UIViewController {
         DBRef = Database.database().reference().child("users").child(userID!)
         ScoreRef = Database.database().reference().child("Scores").child(AdminActivityViewController.username)
         
-        
-        
-    
 
     }
     
@@ -81,7 +78,6 @@ class MyInfoViewController: UIViewController {
         var numberPlease: Int!
         score.removeAll()
         ScoreRef.observe(.value) { (snapshot) in
-            print(snapshot.childrenCount)
             numberPlease = Int(snapshot.childrenCount)
             var x = 0
             self.ScoreRef.observe(.childAdded, with: { (snapshot) in
@@ -116,7 +112,6 @@ class MyInfoViewController: UIViewController {
         for item in scores{
             counter[String(item)] = (counter[String(item)] ?? 0) + 1
         }
-        print(counter)
         setChartData()
         calcAverage()
     }
@@ -126,7 +121,7 @@ class MyInfoViewController: UIViewController {
         for num in scores{
             total += Double(num)
         }
-        let average = String(total/Double(scores.count))
+        let average = String(round(total/Double(scores.count)*10)/10)
         let myAttribute = [NSAttributedString.Key.font: UIFont(name: "Menlo-Bold", size: 20)!]
         let myAttrString = NSAttributedString(string: average, attributes: myAttribute)
         pieChartView.centerAttributedText = myAttrString

@@ -11,13 +11,15 @@ import Firebase
 
 class LoginViewController: UIViewController {
     
+    //variable outlets created for textfields and buttons
     @IBOutlet weak var email:UITextField!
     @IBOutlet weak var password:UITextField!
-    
     @IBOutlet weak var forgotButton:UIButton!
     
+    //database reference variable
     var DBref:DatabaseReference!
     
+    //function to login user checking for valid info
     @IBAction func logIn(_ sender: UIButton){
         sender.pulsate()
         Auth.auth().signIn(withEmail: email.text!, password: password.text!) { (user, error) in
@@ -39,6 +41,7 @@ class LoginViewController: UIViewController {
                 
             }
             else{
+                //show alert when invalid info is entered
                 let alert = UIAlertController(title: "Error", message: "Invalid information. Please enter valid login information.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
@@ -52,6 +55,7 @@ class LoginViewController: UIViewController {
         
         DBref = Database.database().reference()
         
+        //set attributes for the text button
         let attrs : [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.font : UIFont(name: "Menlo", size: 15)!,
             NSAttributedString.Key.foregroundColor : UIColor.white,
@@ -62,9 +66,9 @@ class LoginViewController: UIViewController {
                                                         attributes: attrs)
         forgotButton.setAttributedTitle(attributeString, for: .normal)
 
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
+        //make sure navigation bar is shown
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
 

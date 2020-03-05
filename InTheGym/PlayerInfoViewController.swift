@@ -68,12 +68,8 @@ class PlayerInfoViewController: UIViewController {
         self.username = PlayerActivityViewController.username
         self.usernameLabel.text = "@\(PlayerActivityViewController.username ?? "@username")"
         //self.acceptRequestButton.isHidden = true
-        ScoreRef = Database.database().reference().child("Scores").child(PlayerActivityViewController.coachName).child(username)
-        
-        
-        
-        
     }
+    
     
     func requests(){
         self.requesters.removeAll()
@@ -145,16 +141,15 @@ class PlayerInfoViewController: UIViewController {
     
     func loadScores(){
         score.removeAll()
-        ScoreRef.observe(.value) { (snapshot) in
-            print(snapshot.childrenCount)
-            print("made it here")
-            self.ScoreRef.observe(.value, with: { (snapshot) in
-                if let snap = snapshot.value as? [String:AnyObject]{
-                    print("and hereeeee")
-                    self.score.append(snap)
-                    self.calcValues()
-                }
-            }, withCancel: nil)
+        if ScoreRef != nil {
+            ScoreRef.observe(.value) { (snapshot) in
+                self.ScoreRef.observe(.value, with: { (snapshot) in
+                    if let snap = snapshot.value as? [String:AnyObject]{
+                        self.score.append(snap)
+                        self.calcValues()
+                    }
+                }, withCancel: nil)
+            }
         }
     }
     
@@ -176,7 +171,6 @@ class PlayerInfoViewController: UIViewController {
         for item in scores{
             counter[String(item)] = (counter[String(item)] ?? 0) + 1
         }
-        print(counter)
         setChartData()
     }
     
@@ -185,7 +179,7 @@ class PlayerInfoViewController: UIViewController {
         for num in scores{
             total += Double(num)
         }
-        let average = String(total/Double(scores.count))
+        let average = String(round(total/Double(scores.count)*10)/10)
         let myAttribute = [NSAttributedString.Key.font: UIFont(name: "Menlo-Bold", size: 15)!]
         let myAttrString = NSAttributedString(string: average, attributes: myAttribute)
         pieChart.centerAttributedText = myAttrString
@@ -247,6 +241,9 @@ class PlayerInfoViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if PlayerActivityViewController.coachName != nil {
+            ScoreRef = Database.database().reference().child("Scores").child(PlayerActivityViewController.coachName).child(username)
+        }
         loadUserInfo()
         requests()
         loadScores()

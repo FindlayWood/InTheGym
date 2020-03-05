@@ -52,9 +52,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
         }
         else if complete == false{
-            let alert = UIAlertController(title: "Complete", message: "Are you sure this workout is complete?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Completed!", message: "Enter a difficulty score if this workout is complete.", preferredStyle: .alert)
             alert.addTextField { (score) in
-                score.placeholder = "enter score between 1 and 10"
+                score.placeholder = "enter difficulty score..."
                 score.keyboardType = .numberPad
             }
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in

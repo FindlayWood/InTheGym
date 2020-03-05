@@ -26,6 +26,8 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
     static var exercises :[[String:String]] = []
     static var workouts :[[String:Any]] = []
     
+    // this array is for when a workout is to be set for a group of players
+    var players = [String]()
     
     
     @IBAction func savePressed(_ sender:UIButton){
@@ -67,8 +69,8 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         
-        DBRef = Database.database().reference().child("Workouts").child(userName)
-        ActRef = Database.database().reference()
+        //DBRef = Database.database().reference().child("Workouts").child(userName)
+        //ActRef = Database.database().reference()
         
         
         self.tableview.layer.cornerRadius = 10
@@ -120,11 +122,18 @@ class AddWorkoutHomeViewController: UIViewController, UITableViewDataSource,UITa
 
     
     override func viewWillAppear(_ animated: Bool) {
-        loadWorkouts()
-        loadActivities()
-        loadNumberOfWorkouts()
-        tableview.reloadData()
+        if userName != nil{
+            print(userName ?? "fishsticks")
+        }
+        else if players.count != 0{
+            print(players)
+        }
+        //loadWorkouts()
+        //loadActivities()
+        //loadNumberOfWorkouts()
+        //tableview.reloadData()
         navigationController?.navigationBar.tintColor = .white
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
 }

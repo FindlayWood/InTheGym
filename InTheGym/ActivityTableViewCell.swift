@@ -10,6 +10,7 @@ import UIKit
 
 class ActivityTableViewCell: UITableViewCell {
     
+    // outlet variables for inside the cell
     @IBOutlet weak var type:UILabel!
     @IBOutlet weak var time:UILabel!
     @IBOutlet weak var message:UILabel!
@@ -17,13 +18,13 @@ class ActivityTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        
     }
 
 }

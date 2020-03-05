@@ -10,6 +10,7 @@ import UIKit
 
 class RequestTableViewCell: UITableViewCell {
     
+    // outlet variables inside the request tableview cell
     @IBOutlet var name:UILabel!
     @IBOutlet var acceptButton:UIButton!
     @IBOutlet var declineButton:UIButton!

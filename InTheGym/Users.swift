@@ -8,10 +8,11 @@
 
 import Foundation
 
+// class for a user 
 class Users: NSObject {
     var admin: Bool?
     var email: String?
     var username: String?
-    var fistName: String?
+    var firstName: String?
     var lastName: String?
 }

@@ -1,18 +1,17 @@
 //
-//  PlayerTableViewCell.swift
+//  GeneralTableViewCell.swift
 //  InTheGym
 //
-//  Created by Findlay Wood on 20/07/2019.
-//  Copyright © 2019 FindlayWood. All rights reserved.
+//  Created by Findlay Wood on 25/02/2020.
+//  Copyright © 2020 FindlayWood. All rights reserved.
 //
 
 import UIKit
 
-class PlayerTableViewCell: UITableViewCell {
+class GeneralTableViewCell: UITableViewCell {
     
-    // outlet variables inside the player tableview cell
+    @IBOutlet weak var imagec:UIImageView!
     @IBOutlet weak var name:UILabel!
-    @IBOutlet weak var username:UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

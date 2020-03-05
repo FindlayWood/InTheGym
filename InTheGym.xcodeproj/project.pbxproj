@@ -50,6 +50,11 @@
 		7492265622DA43BB00EAD386 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7492265522DA43BB00EAD386 /* RequestsViewController.swift */; };
 		7492265822DA49E500EAD386 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7492265722DA49E500EAD386 /* RequestTableViewCell.swift */; };
 		74DB061B2303017B00C4A19C /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DB061A2303017B00C4A19C /* ResetPasswordViewController.swift */; };
+		74F6E57523FD99FD00233438 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6E57423FD99FD00233438 /* LeaderboardViewController.swift */; };
+		74F6E57723FDA0F900233438 /* LeaderboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6E57623FDA0F900233438 /* LeaderboardTableViewCell.swift */; };
+		74F6E5792400240600233438 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6E5782400240600233438 /* ProgressViewController.swift */; };
+		74F6E57B24002CAD00233438 /* GeneralWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6E57A24002CAD00233438 /* GeneralWorkoutViewController.swift */; };
+		74F6E57D24049FB100233438 /* GeneralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F6E57C24049FB100233438 /* GeneralTableViewCell.swift */; };
 		BDC4A6588A283EB9BE24917F /* Pods_InTheGymTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B6393354DA301A5619BD1 /* Pods_InTheGymTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +128,11 @@
 		7492265522DA43BB00EAD386 /* RequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		7492265722DA49E500EAD386 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		74DB061A2303017B00C4A19C /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		74F6E57423FD99FD00233438 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
+		74F6E57623FDA0F900233438 /* LeaderboardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardTableViewCell.swift; sourceTree = "<group>"; };
+		74F6E5782400240600233438 /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		74F6E57A24002CAD00233438 /* GeneralWorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralWorkoutViewController.swift; sourceTree = "<group>"; };
+		74F6E57C24049FB100233438 /* GeneralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTableViewCell.swift; sourceTree = "<group>"; };
 		7F0A81F3DA8521BEA4F637A8 /* Pods-InTheGymUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InTheGymUITests.release.xcconfig"; path = "Target Support Files/Pods-InTheGymUITests/Pods-InTheGymUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A884C2E56CD993BE9FEAA916 /* Pods-InTheGym.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InTheGym.release.xcconfig"; path = "Target Support Files/Pods-InTheGym/Pods-InTheGym.release.xcconfig"; sourceTree = "<group>"; };
 		C96B6393354DA301A5619BD1 /* Pods_InTheGymTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InTheGymTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,6 +232,11 @@
 				74443B9722F1CD6B00DD18B3 /* ViewDesign.swift */,
 				74443B9922F1E18500DD18B3 /* SettingsViewController.swift */,
 				74DB061A2303017B00C4A19C /* ResetPasswordViewController.swift */,
+				74F6E57423FD99FD00233438 /* LeaderboardViewController.swift */,
+				74F6E57623FDA0F900233438 /* LeaderboardTableViewCell.swift */,
+				74F6E5782400240600233438 /* ProgressViewController.swift */,
+				74F6E57A24002CAD00233438 /* GeneralWorkoutViewController.swift */,
+				74F6E57C24049FB100233438 /* GeneralTableViewCell.swift */,
 			);
 			path = InTheGym;
 			sourceTree = "<group>";
@@ -500,8 +515,10 @@
 				7492264E22D7873300EAD386 /* TableViewCell.swift in Sources */,
 				7492265422D91C1900EAD386 /* RoundButtons.swift in Sources */,
 				7479A909229F2B4C00D39E2E /* AppDelegate.swift in Sources */,
+				74F6E5792400240600233438 /* ProgressViewController.swift in Sources */,
 				7479A911229F2B4C00D39E2E /* InTheGym.xcdatamodeld in Sources */,
 				7492263A22CE6CD400EAD386 /* AddWorkoutHomeViewController.swift in Sources */,
+				74F6E57723FDA0F900233438 /* LeaderboardTableViewCell.swift in Sources */,
 				74163A4422E37089005A7D2E /* ButtonExtension.swift in Sources */,
 				7492265622DA43BB00EAD386 /* RequestsViewController.swift in Sources */,
 				743B1E8522F065DB0046006C /* PlayerWorkoutViewController.swift in Sources */,
@@ -511,12 +528,15 @@
 				74163A4622E39523005A7D2E /* PlayerTableViewCell.swift in Sources */,
 				7492264622D3A9C100EAD386 /* PBsViewController.swift in Sources */,
 				74163A4822E4A7AF005A7D2E /* ActivityTableViewCell.swift in Sources */,
+				74F6E57523FD99FD00233438 /* LeaderboardViewController.swift in Sources */,
 				743B1E8122EF573A0046006C /* MyInfoViewController.swift in Sources */,
 				7492265022D7C29700EAD386 /* WeightViewController.swift in Sources */,
 				7492263222C8D1DF00EAD386 /* AddPlayerViewController.swift in Sources */,
 				7492264A22D50E4400EAD386 /* WorkoutDetailViewController.swift in Sources */,
 				745D0E7C22A17ED2007670E3 /* SignUpViewController.swift in Sources */,
+				74F6E57D24049FB100233438 /* GeneralTableViewCell.swift in Sources */,
 				74DB061B2303017B00C4A19C /* ResetPasswordViewController.swift in Sources */,
+				74F6E57B24002CAD00233438 /* GeneralWorkoutViewController.swift in Sources */,
 				743B1E8722F08F3F0046006C /* PlayerInfoViewController.swift in Sources */,
 				743B1E7F22EF49CF0046006C /* AdminPlayersViewController.swift in Sources */,
 				7492264222D2350400EAD386 /* RepsViewController.swift in Sources */,

@@ -21,6 +21,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         
+        //check for internet connection
         monitor.pathUpdateHandler = { path in
             if path.status == .unsatisfied{
                 self.showAlert()
@@ -40,10 +41,9 @@ class ViewController: UIViewController {
         DBref = Database.database().reference()
         
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // check if current user exists and log them in
         if Auth.auth().currentUser != nil{
             let userID = Auth.auth().currentUser?.uid
-            print("user id is ", userID!)
             
             self.DBref.child("users").child(userID!).child("admin").observeSingleEvent(of: .value) { (snapshot) in
                 if snapshot.value as! Int == 1{
@@ -59,14 +59,18 @@ class ViewController: UIViewController {
         }
     }
     
+    // function when either button is tapped to navigate to the correct page
     @IBAction func tapped(_ sender:UIButton){
         sender.pulsate()
     }
     
+    // set navigation bar hidden
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
+    
+    // alert to show when user has no internet connection
     func showAlert(){
         let alert = UIAlertController(title: "Connection", message: "You are not connected to the internet. This application will not work without an internet connection.", preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)

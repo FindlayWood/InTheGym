@@ -16,7 +16,7 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     var DBref:DatabaseReference!
     var userRef:DatabaseReference!
     
-    var players = [String]()
+    static var players = [String]()
     var users = [Users]()
 
     override func viewDidLoad() {
@@ -36,7 +36,7 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     func loadPlayers(){
         DBref.child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
             if let snap = snapshot.value as? [String]{
-                self.players = snap
+                AdminPlayersViewController.self.players = snap
                 self.tableview.reloadData()
                 self.loadUsers()
             }
@@ -44,13 +44,13 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func loadUsers(){
-        for player in players{
+        for player in AdminPlayersViewController.players{
             userRef.child("users").child(player).observe(.value) { (snapshot) in
                 if let snap = snapshot.value as? [String:AnyObject]{
                     let user = Users()
                     user.username = snap["username"] as? String
                     user.email = snap["email"] as? String
-                    user.fistName = snap["firstName"] as? String
+                    user.firstName = snap["firstName"] as? String
                     user.lastName = snap["lastName"] as? String
                     self.users.append(user)
                     
@@ -60,12 +60,12 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return players.count
+        return AdminPlayersViewController.players.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableview.dequeueReusableCell(withIdentifier: "cell") as! PlayerTableViewCell
-        let currentID = players[indexPath.row]
+        let currentID = AdminPlayersViewController.players[indexPath.row]
         userRef.child("users").child(currentID).observe(.value) { (snapshot) in
             if let snap = snapshot.value as? [String:AnyObject]{
                 let first = snap["firstName"] as! String
@@ -83,7 +83,7 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
         let SVC = StoryBoard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
         
         let currentUser = users[indexPath.row]
-        SVC.firstNameString = currentUser.username!
+        SVC.firstNameString = currentUser.firstName!
         SVC.lastNameString = currentUser.lastName!
         SVC.userNameString = currentUser.username!
         SVC.userEmailString = currentUser.email!
@@ -93,10 +93,10 @@ class AdminPlayersViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            players.remove(at: indexPath.row)
+            AdminPlayersViewController.players.remove(at: indexPath.row)
             users.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
-            DBref.child("players").setValue(players)
+            DBref.child("players").setValue(AdminPlayersViewController.players)
         }
     }
     

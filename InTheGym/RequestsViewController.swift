@@ -11,10 +11,13 @@ import Firebase
 
 class RequestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // usernames of coaches who sent requests
     var requesters = [String]()
     var username : String = ""
+    // uid of coaches who sent requests
     var requestKeys = [String]()
     var currentRequested = [String]()
+    // array of current accepted users
     var accepted = [String]()
     var activities : [[String:AnyObject]] = []
     
@@ -49,6 +52,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
         return requesters.count
     }
     
+    // fucntion when a request is accepted
     @objc func acceptPressed(_ sender:UIButton){
         sender.pulsate()
         let adminID = requestKeys[sender.tag]
@@ -72,7 +76,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
                 self.requesters.remove(at: sender.tag)
                 self.requestKeys.remove(at: sender.tag)
                 self.tableview.reloadData()
-                //self.navigationController?.popViewController(animated: true)
+                
             }
             self.DBRef.child(adminID).child("players").child("accepted").observeSingleEvent(of: .value) { (snapshot) in
                 if let snap = snapshot.value as? [String]{
@@ -90,6 +94,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
     
+    //function when a request is declined
     @objc func declinePressed(_ sender:UIButton){
         sender.pulsate()
         let adminID = requestKeys[sender.tag]
@@ -112,6 +117,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // function to load all activities for user
     func loadActivities(){
         let userID = Auth.auth().currentUser?.uid
         DBRef.child(userID!).observe(.childAdded, with: { (snapshot) in

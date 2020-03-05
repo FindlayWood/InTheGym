@@ -33,11 +33,7 @@ class PlayerActivityViewController: UIViewController, UITableViewDelegate, UITab
         UserRef.child("username").observeSingleEvent(of: .value) { (snapshot) in
             PlayerActivityViewController.username = snapshot.value as? String
         }
-        UserRef.child("coachName").observeSingleEvent(of: .value) { (snapshot) in
-            if let snap = snapshot.value as? String{
-                PlayerActivityViewController.coachName = snap
-            }
-        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,9 +66,16 @@ class PlayerActivityViewController: UIViewController, UITableViewDelegate, UITab
             }
         }, withCancel: nil)
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         loadActivities()
+        
+        UserRef.child("coachName").observeSingleEvent(of: .value) { (snapshot) in
+            if let snap = snapshot.value as? String{
+                PlayerActivityViewController.coachName = snap
+            }
+        }
+        
         tableview.reloadData()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
